@@ -18,7 +18,7 @@ het pad.
 Neem het voor de naam het deel tussen de `hoogte/` en `%28` en voor de afkorting het deel
 tussen `%28` en `%29`. In het voorbeeld wordt dat dus `Lobith` en `LOBI`.
 Het meest eenvoudige programma wordt dan als volgt:
-```
+```Python
 from waterstand import *
 print(haalwaterstand('Lobith', 'LOBI'))
 ```
