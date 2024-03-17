@@ -2,3 +2,4 @@ venv
 dist
 waterstand.egg-info
 __pycache__
+.pypirc
