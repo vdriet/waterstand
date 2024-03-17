@@ -4,11 +4,11 @@ Ophalen van de actuele waterstand.
 Gegevens komen van Rijkswaterstaat.
 
 ## Gebruik
-Installeer de package:
-`pip install waterstand`
+Installeer de package:  
+`pip install waterstand`  
 
-Of zet waterstand in `requirements.txt` en installeer het op die manier.
-`pip install -r requirements.txt --upgrade`
+Of zet waterstand in `requirements.txt` en installeer het op die manier.  
+`pip install -r requirements.txt --upgrade`  
 
 Ga naar [de site van RWS](https://waterinfo.rws.nl/#/publiek/waterhoogte) en 
 zoek daar een locatie waarvan je hoogte wilt ophalen. Wanneer je de locatie aanklikt 
