@@ -1,0 +1,4 @@
+venv
+dist
+waterstand.egg-info
+__pycache__
