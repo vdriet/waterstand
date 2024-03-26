@@ -12,7 +12,7 @@ keyring==25.0.0
 markdown-it-py==3.0.0
 mdurl==0.1.2
 more-itertools==10.2.0
-nh3==0.2.15
+nh3==0.2.17
 packaging==24.0
 pkginfo==1.10.0
 pycparser==2.21
