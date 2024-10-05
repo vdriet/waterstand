@@ -22,7 +22,7 @@ readme_renderer==44.0
 requests==2.32.3
 requests-toolbelt==1.0.0
 rfc3986==2.0.0
-rich==13.9.1
+rich==13.9.2
 SecretStorage==3.3.3
 twine==5.1.1
 urllib3==2.2.3
