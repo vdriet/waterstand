@@ -16,7 +16,7 @@ mdurl==0.1.2
 more-itertools==10.5.0
 nh3==0.2.18
 packaging==24.1
-pkginfo==1.10.0
+pkginfo==1.11.2
 pycparser==2.22
 Pygments==2.18.0
 pyproject_hooks==1.2.0
