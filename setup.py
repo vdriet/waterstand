@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='waterstand',
-    version='0.0.2',
+    version='0.1.0',
     description='package voor ophalen waterstand',
     packages=['.'],
     license='GPL-3.0',

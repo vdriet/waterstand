@@ -15,7 +15,7 @@ def leesjson(url):
 def leeswaterstandjson(name, abbr):
   """ lees de informatie van bepaalde locatie """
   url = 'https://waterinfo.rws.nl/api/chart/get' + \
-       f'?mapType=waterhoogte&locationCode={name}({abbr})&values=-48,48'
+       f'?mapType=waterhoogte&locationCodes={name}({abbr})&values=-48,48'
   return leesjson(url)
 
 
