@@ -4,4 +4,5 @@ pip install --no-cache-dir --index-url https://test.pypi.org/simple/ --extra-ind
 pip install setuptools pip --upgrade
 pip list --outdated
 pylint *.py
+pytest
 python setup.py sdist
