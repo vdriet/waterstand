@@ -1,1 +1,1 @@
-. ./venv/bin/activate
+. ./waterstand_venv/bin/activate
