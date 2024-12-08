@@ -1,15 +1,16 @@
 """ testen voor de package waterstand """
 import urllib.request
-from waterstand import waterstand
 
 import unittest
 from unittest.mock import patch, MagicMock
 
+import waterstand
+
 class TestUrlopen(unittest.TestCase):
 
   @patch('urllib.request.urlopen')
-  def test_urlopen(self, mock_urlopen):
-    f = open('waterstand/tests/testdata.json', 'r')
+  def test_haalwaterstand(self, mock_urlopen):
+    f = open('tests/testdata.json', 'r')
     testdata = f.read()
 
     mock_response = MagicMock()
