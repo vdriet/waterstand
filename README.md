@@ -6,14 +6,9 @@ Gegevens komen van Rijkswaterstaat.
 ## Gebruik
 Installeer de package:  
 `pip install waterstand`  
-Vooralsnog staat de module nog op test.pypi.org:  
-`pip install --index-url https://test.pypi.org/simple/ waterstand`  
 
 Of zet waterstand in `requirements.txt` en installeer het op die manier.  
-`pip install -r requirements.txt --upgrade`  
-Maar nu nog eerst:  
-`pip install --index-url https://test.pypi.org/simple/ --extra-index-url=https://pypi.org/simple/ -r requirements.txt --upgrade`  
-
+`pip install -r requirements.txt --upgrade`
 
 Ga naar [de site van RWS](https://waterinfo.rws.nl/#/publiek/waterhoogte) en 
 zoek daar een locatie waarvan je hoogte wilt ophalen. Wanneer je de locatie aanklikt 
