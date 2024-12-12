@@ -2,7 +2,7 @@
 import urllib.request
 
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, ANY
 
 import waterstand
 
@@ -22,4 +22,11 @@ class TestUrlopen(unittest.TestCase):
 
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 
-    self.assertEqual(response, {'tijd': '24-11 16:50', 'nu': 101.0, 'morgen': 101.0})
+    self.assertEqual(response, {'resultaat': 'OK', 'tijd': '24-11 16:50', 'nu': 101.0, 'morgen': 101.0})
+
+  @patch('urllib.request.urlopen', side_effect=TimeoutError)
+  def test_haalwaterstand_error(self, mock_urlopen):
+    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+
+    expected = {'result': 'NOK', 'error': ANY}
+    self.assertEqual(response, expected)

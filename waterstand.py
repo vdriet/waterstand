@@ -7,19 +7,24 @@ from urllib.error import HTTPError, URLError
 
 def leesjson(url):
   """ haal JSON van de URL op """
+  fouttekst = ''
   req = request.Request(url=url, headers={'Accept': 'application/json'})
   try:
     with request.urlopen(req, timeout=10) as response:
       contenttekst = response.read().decode('utf-8')
       contentjson = json.loads(contenttekst)
+      contentjson['result'] = 'OK'
       return contentjson
   except HTTPError as error:
-    print(f'HTTP Error: Data ophalen mislukt vanwege {error}\nURL: {url}')
+    fouttekst = f'HTTP Error: Data ophalen mislukt vanwege {error}\nURL: {url}'
   except URLError as error:
-    print(f'URL Error: Data ophalen mislukt vanwege {error}\nURL: {url}')
+    fouttekst = f'URL Error: Data ophalen mislukt vanwege {error}\nURL: {url}'
   except TimeoutError as error:
-    print(f'Timeout Error: Data ophalen mislukt vanwege {error}\nURL: {url}')
-  return {}
+    fouttekst = f'Timeout Error: Data ophalen mislukt vanwege {error}\nURL: {url}'
+  returnjson = {}
+  returnjson['result'] = 'NOK'
+  returnjson['error'] = fouttekst
+  return returnjson
 
 
 def leeswaterstandjson(name, abbr):
@@ -31,8 +36,8 @@ def leeswaterstandjson(name, abbr):
 
 def bepaalstanden(contentjson):
   """ haal de waterstand uit de gegevens """
-  if contentjson == {}:
-    return 'Data van RWS niet beschikbaar'
+  if contentjson['result'] == 'NOK':
+    return contentjson
   laatstetijdgemeten = contentjson['t0']
   gemetenstanden = contentjson['series'][0]['data']
   voorspeldestanden = contentjson['series'][1]['data']
@@ -59,6 +64,7 @@ def bepaalstanden(contentjson):
     if stand['dateTime'] == morgentekst:
       hoogtemorgen = stand['value']
   returnjson = {}
+  returnjson['resultaat'] = 'OK'
   returnjson['tijd'] = weergavetijd
   returnjson['nu'] = hoogtenu
   returnjson['morgen'] = hoogtemorgen
