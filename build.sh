@@ -5,6 +5,7 @@ python3 -m pip install --upgrade build
 pip install -r requirements.txt
 pip list --outdated
 pylint *.py
-pytest
+coverage run -m pytest
+coverage report -m
 rm dist/*
 python -m build
