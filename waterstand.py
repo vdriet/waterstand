@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from urllib import request
 from urllib.error import HTTPError, URLError
 
+
 def leesjson(url):
   """ haal JSON van de URL op """
   fouttekst = ''
@@ -13,7 +14,7 @@ def leesjson(url):
     with request.urlopen(req, timeout=10) as response:
       contenttekst = response.read().decode('utf-8')
       contentjson = json.loads(contenttekst)
-      contentjson['result'] = 'OK'
+      contentjson['resultaat'] = 'OK'
       return contentjson
   except HTTPError as error:
     fouttekst = f'HTTP Error: Data ophalen mislukt vanwege {error}\nURL: {url}'
@@ -21,22 +22,21 @@ def leesjson(url):
     fouttekst = f'URL Error: Data ophalen mislukt vanwege {error}\nURL: {url}'
   except TimeoutError as error:
     fouttekst = f'Timeout Error: Data ophalen mislukt vanwege {error}\nURL: {url}'
-  returnjson = {}
-  returnjson['result'] = 'NOK'
-  returnjson['error'] = fouttekst
+  returnjson = {'resultaat': 'NOK',
+                'error': fouttekst}
   return returnjson
 
 
 def leeswaterstandjson(name, abbr):
   """ lees de informatie van bepaalde locatie """
   url = 'https://waterinfo.rws.nl/api/chart/get' + \
-       f'?mapType=waterhoogte&locationCodes={name}({abbr})&values=-48,48'
+        f'?mapType=waterhoogte&locationCodes={name}({abbr})&values=-48,48'
   return leesjson(url)
 
 
 def bepaalstanden(contentjson):
   """ haal de waterstand uit de gegevens """
-  if contentjson['result'] == 'NOK':
+  if contentjson['resultaat'] == 'NOK':
     return contentjson
   laatstetijdgemeten = contentjson['t0']
   gemetenstanden = contentjson['series'][0]['data']
@@ -54,7 +54,7 @@ def bepaalstanden(contentjson):
     deltatijd = 1
 
   laatstetijdobj = datetime.strptime(laatstetijdgemeten, tijdpatroon) \
-                 + timedelta(hours = deltatijd)
+                   + timedelta(hours=deltatijd)
   weergavetijd = laatstetijdobj.strftime('%d-%m %H:%M')
   morgenobj = laatstetijdobj + timedelta(days=1)
   morgentekst = morgenobj.strftime(tijdpatroon)
@@ -69,6 +69,7 @@ def bepaalstanden(contentjson):
   returnjson['nu'] = hoogtenu
   returnjson['morgen'] = hoogtemorgen
   return returnjson
+
 
 def haalwaterstand(name, abbr):
   """ haal de waterstand van een locatie """

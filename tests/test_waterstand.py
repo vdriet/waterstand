@@ -1,11 +1,10 @@
 """ testen voor de package waterstand """
-import urllib.request
-from urllib.error import HTTPError, URLError
-
 import unittest
 from unittest.mock import patch, MagicMock, ANY
+from urllib.error import HTTPError, URLError
 
 import waterstand
+
 
 class TestUrlopen(unittest.TestCase):
 
@@ -41,23 +40,23 @@ class TestUrlopen(unittest.TestCase):
 
     self.assertEqual(response, {'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': 84.0, 'morgen': 89.0})
 
-  @patch('urllib.request.urlopen', side_effect=HTTPError(None,None,None,None,None))
+  @patch('urllib.request.urlopen', side_effect=HTTPError(None, None, None, None, None))
   def test_haalwaterstand_httperror(self, mock_urlopen):
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 
-    expected = {'result': 'NOK', 'error': ANY}
+    expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
 
   @patch('urllib.request.urlopen', side_effect=TimeoutError)
   def test_haalwaterstand_timeouterror(self, mock_urlopen):
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 
-    expected = {'result': 'NOK', 'error': ANY}
+    expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
 
   @patch('urllib.request.urlopen', side_effect=URLError('Dummy'))
   def test_haalwaterstand_urlerror(self, mock_urlopen):
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 
-    expected = {'result': 'NOK', 'error': ANY}
+    expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
