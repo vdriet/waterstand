@@ -7,5 +7,5 @@ pip list --outdated
 pylint *.py
 coverage run -m pytest
 coverage report -m
-rm dist/*
+rm -f dist/*
 python -m build
