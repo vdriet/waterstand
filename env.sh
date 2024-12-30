@@ -1,1 +1,1 @@
-. ./waterstand_venv/bin/activate
+. `find . -name "activate"`
