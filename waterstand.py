@@ -42,7 +42,7 @@ def bepaalstanden(contentjson):
   gemetenstanden = contentjson['series'][0]['data']
   voorspeldestanden = contentjson['series'][1]['data']
 
-  hoogtenu = -99
+  hoogtenu = -999
   for stand in gemetenstanden:
     if stand['dateTime'] == laatstetijdgemeten:
       hoogtenu = stand['value']

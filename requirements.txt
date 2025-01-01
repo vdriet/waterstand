@@ -8,6 +8,7 @@ coverage==7.6.10
 cryptography==44.0.0
 dill==0.3.9
 docutils==0.21.2
+hatchling==1.27.0
 idna==3.10
 importlib_metadata==8.5.0
 iniconfig==2.0.0
