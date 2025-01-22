@@ -40,7 +40,7 @@ class TestUrlopen(unittest.TestCase):
 
     self.assertEqual(response, {'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': 84.0, 'morgen': 89.0})
 
-  @patch('urllib.request.urlopen', side_effect=HTTPError(None, None, None, None, None))
+  @patch('urllib.request.urlopen', side_effect=HTTPError('', 0, '', None, None))
   def test_haalwaterstand_httperror(self, mock_urlopen):
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 

@@ -64,11 +64,10 @@ def bepaalstanden(contentjson):
   for stand in voorspeldestanden:
     if stand['dateTime'] == morgentekst:
       hoogtemorgen = stand['value']
-  returnjson = {}
-  returnjson['resultaat'] = 'OK'
-  returnjson['tijd'] = weergavetijd
-  returnjson['nu'] = hoogtenu
-  returnjson['morgen'] = hoogtemorgen
+  returnjson = {'resultaat': 'OK',
+                'tijd': weergavetijd,
+                'nu': hoogtenu,
+                'morgen': hoogtemorgen}
   return returnjson
 
 
