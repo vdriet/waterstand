@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "waterstand"
-version = "1.2.0"
+version = "1.2.1"
 authors = [
     { name = "Peter van de Riet", email = "vdriet@gmail.com" },
 ]
 description = "package voor ophalen waterstand"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
