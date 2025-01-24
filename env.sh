@@ -1,1 +1,1 @@
-. `find . -name "activate"`
+. $(find . -name "activate")

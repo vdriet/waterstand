@@ -1,3 +1,18 @@
+## Version 1.2.1
+2025-01-24
+
+### Nieuw
+* Gebruik maken van github actions voor
+  * pylint
+  * pytest
+  * upload release to pypi.org
+### Gewijzigd
+* Alleen echte requirements
+* Diverse afhankelijkheden bijgewerkt naar nieuwe versie
+* Verbeteringen in de code nav checks
+[//]: # (### Hersteld)
+[//]: # (### Verwijderd)
+
 ## Version 1.2.0
 2025-01-01
 ### Nieuw
@@ -9,7 +24,6 @@
 * Virtual env (venv) laden met `env.sh` flexibeler gemaakt.
 ### Hersteld
 * Als de huidige stand niet in de gegevens staat wordt -99
-[//]: # (### Verwijderd)
 
 ## Version 1.1.1
 Datum: 2025-12-20
