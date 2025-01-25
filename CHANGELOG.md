@@ -1,5 +1,5 @@
 ## Version 1.2.1
-2025-01-24
+2025-01-25
 
 ### Nieuw
 * Gebruik maken van github actions voor
