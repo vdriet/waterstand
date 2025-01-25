@@ -48,5 +48,6 @@ jobs:
         run: |
           release_tag="${{ github.ref }}"
           release_version="${release_tag#refs/tags/}"
+          echo $release_version > release_version.txt
       - name: Publish release distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/$release_version
+        uses: pypa/gh-action-pypi-publish@release/$(cat release_version.txt)
