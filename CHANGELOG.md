@@ -1,4 +1,13 @@
 ## Version 1.2.1
+2025-xx-yy
+
+### Nieuw
+### Gewijzigd
+### Hersteld
+### Verwijderd
+* scipts voor upload naar pypi.org
+
+## Version 1.2.1
 2025-01-25
 
 ### Nieuw
@@ -10,8 +19,6 @@
 * Alleen echte requirements
 * Diverse afhankelijkheden bijgewerkt naar nieuwe versie
 * Verbeteringen in de code nav checks
-[//]: # (### Hersteld)
-[//]: # (### Verwijderd)
 
 ## Version 1.2.0
 2025-01-01
@@ -39,3 +46,11 @@ Datum: 2025-12-12
 Datum: 2025-12-09
 ### Nieuw
 * Eerste versie in productie
+
+## Version a.b.c
+2025-xx-yy
+
+### Nieuw
+### Gewijzigd
+### Hersteld
+### Verwijderd
