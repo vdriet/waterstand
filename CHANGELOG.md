@@ -1,7 +1,8 @@
-## Version 1.2.1
+## Version volgende
 2025-xx-yy
 
 ### Nieuw
+* Download-URL in projectfile
 ### Gewijzigd
 ### Hersteld
 ### Verwijderd

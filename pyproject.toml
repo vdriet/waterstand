@@ -22,6 +22,7 @@ classifiers = [
 Homepage = "https://github.com/vdriet/waterstand"
 Issues = "https://github.com/vdriet/waterstand/issues"
 Changelog = "https://github.com/vdriet/waterstand/blob/main/CHANGELOG.md"
+Download = "https://pypi.org/project/waterstand/"
 
 [tool.pytest.ini_options]
 addopts = [
