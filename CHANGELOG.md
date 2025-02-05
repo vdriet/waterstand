@@ -4,6 +4,7 @@
 ### Nieuw
 * Download-URL in projectfile
 ### Gewijzigd
+* requests gebruiken in plaats van urllib
 ### Hersteld
 ### Verwijderd
 * scipts voor upload naar pypi.org

@@ -1,30 +1,23 @@
 """ Ophalen van de waterstand """
-import json
-
 from datetime import datetime, timedelta
-from urllib import request
-from urllib.error import HTTPError, URLError
+
+import requests
 
 
 def leesjson(url):
   """ haal JSON van de URL op """
-  fouttekst = ''
-  req = request.Request(url=url, headers={'Accept': 'application/json'})
   try:
-    with request.urlopen(req, timeout=10) as response:
-      contenttekst = response.read().decode('utf-8')
-      contentjson = json.loads(contenttekst)
-      contentjson['resultaat'] = 'OK'
-      return contentjson
-  except HTTPError as error:
-    fouttekst = f'HTTP Error: Data ophalen mislukt vanwege {error}\nURL: {url}'
-  except URLError as error:
-    fouttekst = f'URL Error: Data ophalen mislukt vanwege {error}\nURL: {url}'
-  except TimeoutError as error:
-    fouttekst = f'Timeout Error: Data ophalen mislukt vanwege {error}\nURL: {url}'
-  returnjson = {'resultaat': 'NOK',
-                'error': fouttekst}
-  return returnjson
+    headers = {'Accept': 'application/json'}
+    req = requests.get(url, headers=headers, verify=False, timeout=10, allow_redirects=False)
+    contentjson = req.json()
+    contentjson['resultaat'] = 'OK'
+    return contentjson
+  except (ConnectionError,
+          TimeoutError,
+          requests.exceptions.HTTPError,
+          requests.exceptions.RequestException) as error:
+    return {'resultaat': 'NOK',
+            'error': f'Error: Data ophalen mislukt vanwege {error}\nURL: {url}'}
 
 
 def leeswaterstandjson(name, abbr):
