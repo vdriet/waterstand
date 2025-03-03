@@ -42,7 +42,7 @@ rfc3986==2.0.0
 rich==13.9.4
 SecretStorage==3.3.3
 tomlkit==0.13.2
-trove-classifiers==2025.2.18.16
+trove-classifiers==2025.3.3.18
 twine==6.1.0
 urllib3==2.3.0
 zipp==3.21.0
