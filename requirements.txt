@@ -1,4 +1,4 @@
-astroid==3.3.8
+astroid==3.3.9
 backports.tarfile==1.2.0
 build==1.2.2.post1
 certifi==2025.1.31
