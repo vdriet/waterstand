@@ -26,7 +26,7 @@ more-itertools==10.7.0
 nh3==0.2.21
 packaging==25.0
 pathspec==0.12.1
-pip==25.0.1
+pip==25.1
 pkginfo==1.12.1.2
 platformdirs==4.3.7
 pluggy==1.5.0
