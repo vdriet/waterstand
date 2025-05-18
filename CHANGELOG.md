@@ -1,11 +1,14 @@
-## Version volgende
-2025-xx-yy
+## Version 1.2.2
+2025-05-18
 
 ### Nieuw
 * Download-URL in projectfile
+* Extra check met mypy 
+
 ### Gewijzigd
-* requests gebruiken in plaats van urllib
-### Hersteld
+* `requests` gebruiken in plaats van `urllib`
+* Documentatie in source uitgebreid
+
 ### Verwijderd
 * scipts voor upload naar pypi.org
 
