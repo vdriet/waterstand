@@ -23,6 +23,8 @@ markdown-it-py==3.0.0
 mccabe==0.7.0
 mdurl==0.1.2
 more-itertools==10.7.0
+mypy==1.15.0
+mypy_extensions==1.1.0
 nh3==0.2.21
 packaging==25.0
 pathspec==0.12.1
@@ -44,5 +46,7 @@ SecretStorage==3.3.3
 tomlkit==0.13.2
 trove-classifiers==2025.5.9.12
 twine==6.1.0
+types-requests==2.32.0.20250515
+typing_extensions==4.13.2
 urllib3==2.4.0
 zipp==3.21.0

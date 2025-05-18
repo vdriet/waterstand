@@ -1,11 +1,20 @@
-""" Ophalen van de waterstand """
+"""
+Ophalen van de waterstand. Gegevens komen van https://waterinfo.rws.nl/ en de gegevens voor vandaag
+en morgen worden er uit gehaald.
+"""
 from datetime import datetime, timedelta
 
 import requests
 
 
-def leesjson(url):
-  """ haal JSON van de URL op """
+def leesjson(url: str) -> dict:
+  """
+  Haal JSON van de URL op
+  :param url: URL waar de JSON opgehaald moet worden
+  :type url: str
+  :return: JSON
+  :rtype: dict
+  """
   try:
     headers = {'Accept': 'application/json'}
     req = requests.get(url, headers=headers, verify=False, timeout=10, allow_redirects=False)
@@ -20,20 +29,34 @@ def leesjson(url):
             'error': f'Error: Data ophalen mislukt vanwege {error}\nURL: {url}'}
 
 
-def leeswaterstandjson(name, abbr):
-  """ lees de informatie van bepaalde locatie """
+def leeswaterstandjson(naam: str, afkorting: str) -> dict:
+  """
+  Lees de informatie van bepaalde locatie van de API van RWS.
+  :param naam: Naam van de locatie
+  :type naam: str
+  :param afkorting: Afkorting van de locatie
+  :type afkorting: str
+  :return: JSON met de waardes van de waterstanden
+  :rtype: dict
+  """
   url = 'https://waterinfo.rws.nl/api/chart/get' + \
-        f'?mapType=waterhoogte&locationCodes={name}({abbr})&values=-48,48'
+        f'?mapType=waterhoogte&locationCodes={naam}({afkorting})&values=-48,48'
   return leesjson(url)
 
 
-def bepaalstanden(contentjson):
-  """ haal de waterstand uit de gegevens """
-  if contentjson['resultaat'] == 'NOK':
-    return contentjson
-  laatstetijdgemeten = contentjson['t0']
-  gemetenstanden = contentjson['series'][0]['data']
-  voorspeldestanden = contentjson['series'][1]['data']
+def bepaalstanden(waterstandjson: dict) -> dict:
+  """
+  Haal de noodzakelijke gegevens van de waterstand uit de gegevens van RWS.
+  :param waterstandjson: Dict met de gegevens van de waterstanden
+  :type waterstandjson: dict
+  :return: JSON met de waardes van de waterstanden
+  :rtype: dict
+  """
+  if waterstandjson['resultaat'] == 'NOK':
+    return waterstandjson
+  laatstetijdgemeten = waterstandjson['t0']
+  gemetenstanden = waterstandjson['series'][0]['data']
+  voorspeldestanden = waterstandjson['series'][1]['data']
 
   hoogtenu = -999
   for stand in gemetenstanden:
@@ -64,7 +87,15 @@ def bepaalstanden(contentjson):
   return returnjson
 
 
-def haalwaterstand(name, abbr):
-  """ haal de waterstand van een locatie """
-  contentjson = leeswaterstandjson(name, abbr)
+def haalwaterstand(naam: str, afkorting: str) -> dict:
+  """
+  Haal de waterstand van een locatie bij RWS en haal de noodzakelijke waarden daar uit.
+  :param naam: Naam van de locatie
+  :type naam: str
+  :param afkorting: Afkorting van de locatie
+  :type afkorting: str
+  :return: JSON met de waardes van de waterstanden
+  :rtype: dict
+  """
+  contentjson = leeswaterstandjson(naam, afkorting)
   return bepaalstanden(contentjson)
