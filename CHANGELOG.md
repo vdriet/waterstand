@@ -1,3 +1,12 @@
+## Version a.b.c
+2025-xx-yy
+
+### Nieuw
+### Gewijzigd
+* Type bij variabelen 
+### Hersteld
+### Verwijderd
+
 ## Version 1.2.2
 2025-05-18
 
