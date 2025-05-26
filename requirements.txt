@@ -49,4 +49,4 @@ twine==6.1.0
 types-requests==2.32.0.20250515
 typing_extensions==4.13.2
 urllib3==2.4.0
-zipp==3.21.0
+zipp==3.22.0
