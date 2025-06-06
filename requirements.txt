@@ -43,7 +43,7 @@ requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==14.0.0
 SecretStorage==3.3.3
-tomlkit==0.13.2
+tomlkit==0.13.3
 trove-classifiers==2025.5.9.12
 twine==6.1.0
 types-requests==2.32.0.20250602
