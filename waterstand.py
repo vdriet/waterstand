@@ -3,6 +3,7 @@ Ophalen van de waterstand. Gegevens komen van https://waterinfo.rws.nl/ en de ge
 en morgen worden er uit gehaald.
 """
 from datetime import datetime, timedelta
+from time import sleep
 
 import requests
 from requests import Response
@@ -16,22 +17,27 @@ def leesjson(url: str) -> dict:
   :return: JSON
   :rtype: dict
   """
-  try:
-    headers: dict[str, str] = {'Accept': 'application/json'}
-    req: Response = requests.get(url,
-                                 headers=headers,
-                                 verify=False,
-                                 timeout=10,
-                                 allow_redirects=False)
-    contentjson: dict = req.json()
-    contentjson['resultaat'] = 'OK'
-    return contentjson
-  except (ConnectionError,
-          TimeoutError,
-          requests.exceptions.HTTPError,
-          requests.exceptions.RequestException) as error:
-    return {'resultaat': 'NOK',
-            'error': f'Error: Data ophalen mislukt vanwege {error}\nURL: {url}'}
+  maxpogingen: int = 3
+  for poging in range(maxpogingen):
+    try:
+      headers: dict[str, str] = {'Accept': 'application/json'}
+      req: Response = requests.get(url,
+                                   headers=headers,
+                                   verify=False,
+                                   timeout=10,
+                                   allow_redirects=False)
+      contentjson: dict = req.json()
+      contentjson['resultaat'] = 'OK'
+      return contentjson
+    except (ConnectionError,
+            TimeoutError,
+            requests.exceptions.HTTPError,
+            requests.exceptions.RequestException) as error:
+      if poging < maxpogingen - 1:
+        print(f'Error: Data ophalen mislukt vanwege {error}\nURL: {url}, pogingen: {poging}')
+        sleep((poging + 1) * 10)
+  return {'resultaat': 'NOK',
+          'error': 'Error: Data ophalen mislukt vanwege teveel pogingen'}
 
 
 def leeswaterstandjson(naam: str, afkorting: str) -> dict:

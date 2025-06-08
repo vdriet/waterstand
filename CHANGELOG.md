@@ -1,11 +1,11 @@
-## Version a.b.c
-2025-xx-yy
+## Version 1.3.0
+2025-06-08
 
 ### Nieuw
+Retry na timeout bij ophalen waterstand
 ### Gewijzigd
-* Type bij variabelen 
-### Hersteld
-### Verwijderd
+* Type bij variabelen
+* Dependencies bijgewerkt
 
 ## Version 1.2.2
 2025-05-18

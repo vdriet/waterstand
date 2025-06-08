@@ -46,46 +46,69 @@ class TestWaterstand(unittest.TestCase):
     self.assertEqual(response, verwacht)
 
   @patch('requests.get', side_effect=HTTPError('', 0, '', None, None))
-  def test_haalwaterstand_httperror(self, mock_requestsget):
+  @patch('waterstand.sleep', return_value=None)
+  def test_haalwaterstand_httperror(self, mock_sleep, mock_requestsget):
     """ test van een HTTP-fout bij het ophalen """
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
-    assert mock_requestsget.called
+    assert mock_requestsget.call_count == 3
+    assert mock_sleep.call_count == 2
 
   @patch('requests.get', side_effect=TimeoutError)
-  def test_haalwaterstand_timeouterror(self, mock_requestsget):
+  @patch('waterstand.sleep', return_value=None)
+  def test_haalwaterstand_timeouterror(self, mock_sleep, mock_requestsget):
     """ test van een time-out bij het ophalen """
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
-    assert mock_requestsget.called
+    assert mock_requestsget.call_count == 3
+    assert mock_sleep.call_count == 2
 
   @patch('requests.get', side_effect=ConnectionError)
-  def test_haalwaterstand_connectionerror(self, mock_requestsget):
+  @patch('waterstand.sleep', return_value=None)
+  def test_haalwaterstand_connectionerror(self, mock_sleep, mock_requestsget):
     """ Test van een connection error bij het ophalen """
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
-    assert mock_requestsget.called
+    assert mock_requestsget.call_count == 3
+    assert mock_sleep.call_count == 2
 
   @patch('requests.get', side_effect=Timeout())
-  def test_haalwaterstand_timeout(self, mock_requestsget):
+  @patch('waterstand.sleep', return_value=None)
+  def test_haalwaterstand_timeout(self, mock_sleep, mock_requestsget):
     """ Test van een Time-out bij het ophalen """
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
-    assert mock_requestsget.called
+    assert mock_requestsget.call_count == 3
+    assert mock_sleep.call_count == 2
 
   @patch('requests.get', side_effect=RequestException())
-  def test_haalwaterstand_requestexception(self, mock_requestsget):
+  @patch('waterstand.sleep', return_value=None)
+  def test_haalwaterstand_requestexception(self, mock_sleep, mock_requestsget):
     """ Test van een algemene exceptie bij het ophalen """
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
-    assert mock_requestsget.called
+    assert mock_requestsget.call_count == 3
+    assert mock_sleep.call_count == 2
+
+  @patch('requests.get', side_effect=[RequestException(),
+                                      create_mock_response('tests/testdata.json'),
+                                      ])
+  @patch('waterstand.sleep', return_value=None)
+  def test_haalwaterstand_requestexception_eenmalig(self, mock_sleep, mock_requestsget):
+    """ Test van een algemene exceptie bij het ophalen """
+    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+
+    expected = {'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': 84.0, 'morgen': 89.0}
+    self.assertEqual(response, expected)
+    assert mock_requestsget.call_count == 2
+    assert mock_sleep.call_count == 1
