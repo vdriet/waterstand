@@ -21,14 +21,17 @@ def leesjson(url: str) -> dict:
   for poging in range(maxpogingen):
     try:
       headers: dict[str, str] = {'Accept': 'application/json'}
-      req: Response = requests.get(url,
-                                   headers=headers,
-                                   verify=False,
-                                   timeout=10,
-                                   allow_redirects=False)
-      contentjson: dict = req.json()
-      contentjson['resultaat'] = 'OK'
-      return contentjson
+      resp: Response = requests.get(url,
+                                    headers=headers,
+                                    verify=False,
+                                    timeout=10,
+                                    allow_redirects=False)
+      if resp.status_code == 200:
+        contentjson: dict = resp.json()
+        contentjson['resultaat'] = 'OK'
+        return contentjson
+      return {'resultaat': 'NOK',
+              'error': f'Statuscode {resp.status_code} van RWS'}
     except (ConnectionError,
             TimeoutError,
             requests.exceptions.HTTPError,
@@ -65,38 +68,41 @@ def bepaalstanden(waterstandjson: dict) -> dict:
   """
   if waterstandjson['resultaat'] == 'NOK':
     return waterstandjson
-  laatstetijdgemeten: str = waterstandjson['t0']
-  gemetenstanden: list = waterstandjson['series'][0]['data']
-  voorspeldestanden: list = waterstandjson['series'][1]['data']
+  try:
+    laatstetijdgemeten: str = waterstandjson['t0']
+    gemetenstanden: list = waterstandjson['series'][0]['data']
+    voorspeldestanden: list = waterstandjson['series'][1]['data']
 
-  hoogtenu: int = -999
-  stand: dict
-  for stand in gemetenstanden:
-    if stand['dateTime'] == laatstetijdgemeten:
-      hoogtenu = stand['value']
+    hoogtenu: int = -999
+    stand: dict
+    for stand in gemetenstanden:
+      if stand['dateTime'] == laatstetijdgemeten:
+        hoogtenu = stand['value']
 
-  if laatstetijdgemeten.endswith('Z'):
-    tijdpatroon: str = '%Y-%m-%dT%H:%M:%SZ'
-    deltatijd: int = 1
-  else:
-    tijdpatroon = '%Y-%m-%dT%H:%M:%S+02:00'
-    deltatijd = 1
+    if laatstetijdgemeten.endswith('Z'):
+      tijdpatroon: str = '%Y-%m-%dT%H:%M:%SZ'
+      deltatijd: int = 1
+    else:
+      tijdpatroon = '%Y-%m-%dT%H:%M:%S+02:00'
+      deltatijd = 1
 
-  laatstetijdobj: datetime = datetime.strptime(laatstetijdgemeten, tijdpatroon) \
-                             + timedelta(hours=deltatijd)
-  weergavetijd: str = laatstetijdobj.strftime('%d-%m %H:%M')
-  morgenobj: datetime = laatstetijdobj + timedelta(days=1)
-  morgentekst: str = morgenobj.strftime(tijdpatroon)
+    laatstetijdobj: datetime = datetime.strptime(laatstetijdgemeten, tijdpatroon) \
+                               + timedelta(hours=deltatijd)
+    weergavetijd: str = laatstetijdobj.strftime('%d-%m %H:%M')
+    morgenobj: datetime = laatstetijdobj + timedelta(days=1)
+    morgentekst: str = morgenobj.strftime(tijdpatroon)
 
-  hoogtemorgen: int = hoogtenu
-  for stand in voorspeldestanden:
-    if stand['dateTime'] == morgentekst:
-      hoogtemorgen = stand['value']
-  returnjson = {'resultaat': 'OK',
-                'tijd': weergavetijd,
-                'nu': hoogtenu,
-                'morgen': hoogtemorgen}
-  return returnjson
+    hoogtemorgen: int = hoogtenu
+    for stand in voorspeldestanden:
+      if stand['dateTime'] == morgentekst:
+        hoogtemorgen = stand['value']
+    returnjson = {'resultaat': 'OK',
+                  'tijd': weergavetijd,
+                  'nu': hoogtenu,
+                  'morgen': hoogtemorgen}
+    return returnjson
+  except(KeyError, TypeError) as error:
+    return {'resultaat': 'NOK', 'error': error}
 
 
 def haalwaterstand(naam: str, afkorting: str) -> dict:

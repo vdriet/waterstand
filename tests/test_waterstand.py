@@ -8,7 +8,7 @@ from requests.exceptions import HTTPError, Timeout, RequestException
 import waterstand
 
 
-def create_mock_response(filenaam):
+def create_mock_response(filenaam, httpstatus=200):
   """ maak een response van de testdata """
   with open(filenaam, 'r', encoding='utf-8') as fid:
     testdata = json.loads(fid.read().encode('utf-8'))
@@ -16,7 +16,7 @@ def create_mock_response(filenaam):
   print(testdata)
 
   mock_response = MagicMock()
-  mock_response.getcode.return_value = 200
+  mock_response.status_code = httpstatus
   mock_response.json.return_value = testdata
   mock_response.__enter__.return_value = mock_response
   return mock_response
@@ -112,3 +112,23 @@ class TestWaterstand(unittest.TestCase):
     self.assertEqual(response, expected)
     assert mock_requestsget.call_count == 2
     assert mock_sleep.call_count == 1
+
+  @patch('requests.get')
+  def test_haalwaterstand_geen200(self, mock_requestsget):
+    """ geen status 200 bij ophalen data """
+    mock_requestsget.return_value = create_mock_response('tests/testdata.json', 400)
+
+    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    verwacht = {'resultaat': 'NOK', 'error': ANY}
+
+    self.assertEqual(response, verwacht)
+
+  @patch('requests.get')
+  def test_haalwaterstand_geendata(self, mock_requestsget):
+    """ geen data als output """
+    mock_requestsget.return_value = create_mock_response('tests/testdata3.json')
+
+    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    verwacht = {'resultaat': 'NOK', 'error': ANY}
+
+    self.assertEqual(response, verwacht)
