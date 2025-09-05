@@ -45,7 +45,7 @@ rich==14.1.0
 SecretStorage==3.3.3
 tomlkit==0.13.3
 trove-classifiers==2025.8.26.11
-twine==6.1.0
+twine==6.2.0
 types-requests==2.32.4.20250809
 typing_extensions==4.15.0
 urllib3==2.5.0
