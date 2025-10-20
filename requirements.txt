@@ -34,7 +34,7 @@ platformdirs==4.5.0
 pluggy==1.6.0
 pycparser==2.23
 Pygments==2.19.2
-pylint==4.0.1
+pylint==4.0.2
 pyproject_hooks==1.2.0
 pytest==8.4.2
 readme_renderer==44.0
