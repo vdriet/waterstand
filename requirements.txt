@@ -8,7 +8,7 @@ coverage==7.12.0
 cryptography==46.0.3
 dill==0.4.0
 docutils==0.22.3
-hatchling==1.27.0
+hatchling==1.28.0
 id==1.5.0
 idna==3.11
 importlib_metadata==8.7.0
