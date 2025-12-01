@@ -44,7 +44,7 @@ rfc3986==2.0.0
 rich==14.2.0
 SecretStorage==3.5.0
 tomlkit==0.13.3
-trove-classifiers==2025.11.14.15
+trove-classifiers==2025.12.1.14
 twine==6.2.0
 types-requests==2.32.4.20250913
 typing_extensions==4.15.0
