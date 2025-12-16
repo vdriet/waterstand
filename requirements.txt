@@ -23,7 +23,7 @@ markdown-it-py==4.0.0
 mccabe==0.7.0
 mdurl==0.1.2
 more-itertools==10.8.0
-mypy==1.19.0
+mypy==1.19.1
 mypy_extensions==1.1.0
 nh3==0.3.2
 packaging==25.0
