@@ -1,3 +1,12 @@
+## Version 1.3.2
+2026-01-04
+
+### Gewijzigd
+* Dependencies bijgewerkt
+
+### Hersteld
+  * Geen crash als er geen actuele data is
+
 ## Version 1.3.1
 2025-06-11
 
