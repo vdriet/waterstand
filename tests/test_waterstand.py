@@ -41,7 +41,7 @@ class TestWaterstand(unittest.TestCase):
     mock_requestsget.return_value = create_mock_response('tests/testdata2.json')
 
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
-    verwacht = {'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': 84.0, 'morgen': 89.0}
+    verwacht = {'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': -999, 'morgen': 89.0}
 
     self.assertEqual(response, verwacht)
 

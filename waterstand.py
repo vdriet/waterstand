@@ -70,8 +70,13 @@ def bepaalstanden(waterstandjson: dict) -> dict:
     return waterstandjson
   try:
     laatstetijdgemeten: str = waterstandjson['t0']
-    gemetenstanden: list = waterstandjson['series'][0]['data']
-    voorspeldestanden: list = waterstandjson['series'][1]['data']
+    voorspeldestanden: list = []
+    gemetenstanden: list = []
+    for serie in waterstandjson['series']:
+      if serie['isPrediction']:
+        voorspeldestanden = serie['data']
+      else:
+        gemetenstanden = serie['data']
 
     hoogtenu: int = -999
     stand: dict
@@ -79,15 +84,17 @@ def bepaalstanden(waterstandjson: dict) -> dict:
       if stand['dateTime'] == laatstetijdgemeten:
         hoogtenu = stand['value']
 
-    if laatstetijdgemeten.endswith('Z'):
+    if laatstetijdgemeten.endswith(':00Z'):
       tijdpatroon: str = '%Y-%m-%dT%H:%M:%SZ'
-      deltatijd: int = 1
-    else:
+    elif '+' in laatstetijdgemeten:
       tijdpatroon = '%Y-%m-%dT%H:%M:%S+02:00'
-      deltatijd = 1
+    else:
+      laatstetijdgemeten = f'{laatstetijdgemeten[:12]}:00:00Z'
+      tijdpatroon = '%Y-%m-%dT%H:%M:%SZ'
+
 
     laatstetijdobj: datetime = datetime.strptime(laatstetijdgemeten, tijdpatroon) \
-                               + timedelta(hours=deltatijd)
+                               + timedelta(hours=1)
     weergavetijd: str = laatstetijdobj.strftime('%d-%m %H:%M')
     morgenobj: datetime = laatstetijdobj + timedelta(days=1)
     morgentekst: str = morgenobj.strftime(tijdpatroon)
