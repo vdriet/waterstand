@@ -60,7 +60,7 @@ seaborn==0.13.2
 SecretStorage==3.5.0
 six==1.17.0
 tomlkit==0.13.3
-trove-classifiers==2025.12.1.14
+trove-classifiers==2026.1.12.15
 twine==6.2.0
 types-pytz==2025.2.0.20251108
 types-requests==2.32.4.20260107
