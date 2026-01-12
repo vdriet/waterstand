@@ -10,7 +10,7 @@ authors = [
 ]
 description = "package voor ophalen waterstand"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",

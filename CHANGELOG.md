@@ -1,3 +1,9 @@
+## Version 1.4.1
+2026-01-12
+
+### Gewijzigd
+* Drop support voor python 3.10
+
 ## Version 1.4.0
 2026-01-12
 
