@@ -28,7 +28,7 @@ class TestWaterstand(unittest.TestCase):
   @patch('requests.get')
   def test_haalwaterstand(self, mock_requestsget):
     """ test van de normale flow """
-    mock_requestsget.return_value = create_mock_response('tests/testdata.json')
+    mock_requestsget.return_value = create_mock_response('tests/testdata1.json')
 
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
     verwacht = {'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': 84.0, 'morgen': 89.0}
@@ -101,7 +101,7 @@ class TestWaterstand(unittest.TestCase):
     assert mock_sleep.call_count == 2
 
   @patch('requests.get', side_effect=[RequestException(),
-                                      create_mock_response('tests/testdata.json'),
+                                      create_mock_response('tests/testdata1.json'),
                                       ])
   @patch('waterstand.sleep', return_value=None)
   def test_haalwaterstand_requestexception_eenmalig(self, mock_sleep, mock_requestsget):
@@ -116,7 +116,7 @@ class TestWaterstand(unittest.TestCase):
   @patch('requests.get')
   def test_haalwaterstand_geen200(self, mock_requestsget):
     """ geen status 200 bij ophalen data """
-    mock_requestsget.return_value = create_mock_response('tests/testdata.json', 400)
+    mock_requestsget.return_value = create_mock_response('tests/testdata1.json', 400)
 
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
     verwacht = {'resultaat': 'NOK', 'error': ANY}
@@ -130,5 +130,26 @@ class TestWaterstand(unittest.TestCase):
 
     response = waterstand.haalwaterstand('Katerveer', 'KATV')
     verwacht = {'resultaat': 'NOK', 'error': ANY}
+
+    self.assertEqual(response, verwacht)
+
+  @patch('requests.get')
+  def test_haalwaterstand_apartdatumformaat(self, mock_requestsget):
+    """ apart datumformaat als output """
+    mock_requestsget.return_value = create_mock_response('tests/testdata4.json')
+
+    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    verwacht = {'resultaat': 'OK', 'tijd': '23-11 02:00', 'nu': -999, 'morgen': -999}
+
+    self.assertEqual(response, verwacht)
+
+  @patch('requests.get')
+  def test_maakafbeelding(self, mock_requestsget):
+    """ test van de normale flow """
+    mock_requestsget.return_value = create_mock_response('tests/testdata1.json')
+
+    response = waterstand.maakafbeelding('Lobith', 'LOBI')
+    with open('tests/testdata1_plot.png', 'rb') as imagedata:
+      verwacht = imagedata.read()
 
     self.assertEqual(response, verwacht)

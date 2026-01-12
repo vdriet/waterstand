@@ -5,7 +5,11 @@ en morgen worden er uit gehaald.
 from datetime import datetime, timedelta
 from time import sleep
 
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
 import requests
+import seaborn as sns
 from requests import Response
 
 
@@ -23,7 +27,7 @@ def leesjson(url: str) -> dict:
       headers: dict[str, str] = {'Accept': 'application/json'}
       resp: Response = requests.get(url,
                                     headers=headers,
-                                    verify=False,
+                                    verify=True,
                                     timeout=10,
                                     allow_redirects=False)
       if resp.status_code == 200:
@@ -92,7 +96,6 @@ def bepaalstanden(waterstandjson: dict) -> dict:
       laatstetijdgemeten = f'{laatstetijdgemeten[:12]}:00:00Z'
       tijdpatroon = '%Y-%m-%dT%H:%M:%SZ'
 
-
     laatstetijdobj: datetime = datetime.strptime(laatstetijdgemeten, tijdpatroon) \
                                + timedelta(hours=1)
     weergavetijd: str = laatstetijdobj.strftime('%d-%m %H:%M')
@@ -124,3 +127,39 @@ def haalwaterstand(naam: str, afkorting: str) -> dict:
   """
   contentjson: dict = leeswaterstandjson(naam, afkorting)
   return bepaalstanden(contentjson)
+
+
+def maakafbeelding(naam: str, afkorting: str) -> bytes:
+  """
+  Maak een afbeelding van de afgelopen dagen en verwachting van de komende tijd.
+  De gegevens van de locatie bij RWS worden opgehaald en de noodzakelijke waarden worden gebruikt.
+  :param naam: Naam van de locatie
+  :type naam: str
+  :param afkorting: Afkorting van de locatie
+  :type afkorting: str
+  :return: Grafiek in png-formaat
+  :rtype: bytes
+  """
+  rawdata = leeswaterstandjson(naam, afkorting)
+  data = []
+  for val in rawdata['series'][0]['data']:
+    data.append({'type': 'Gemeten', 'datetime': val['dateTime'], 'value': val['value']})
+  for val in rawdata['series'][1]['data']:
+    data.append({'type': 'Verwacht', 'datetime': val['dateTime'], 'value': val['value']})
+
+  df = pd.DataFrame(data)
+  df['datetime'] = pd.to_datetime(df['datetime'])
+  sns.set_theme(style="whitegrid")
+  plt.figure(figsize=(12, 6))
+  sns.lineplot(data=df, x='datetime', y='value', hue='type', marker='o')
+  plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))
+  plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=4))
+  plt.xticks(rotation=45)
+  plt.title(f'Waterstand {naam}', fontsize=15)
+  plt.xlabel('Tijd', fontsize=12)
+  plt.ylabel('Hoogte', fontsize=12)
+  plt.tight_layout()
+  plt.savefig('plot.png')
+  with open('plot.png', 'rb') as pngfile:
+    img = pngfile.read()
+  return img

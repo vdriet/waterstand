@@ -22,3 +22,7 @@ Het meest eenvoudige programma wordt dan als volgt:
 from waterstand import *
 print(haalwaterstand('Lobith', 'LOBI'))
 ```
+
+Een PNG-afbeelding zoals hieronder kan gemaakt worden door een aanroep van `maakafbeelding()`
+met dezelfde parameters als `haalwaterstand()`. 
+![testdata1_plot.png](tests/testdata1_plot.png)

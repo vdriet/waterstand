@@ -1,3 +1,13 @@
+## Version 1.4.0
+2026-01-12
+
+### Nieuw
+* Maak van een afbeelding van de waarden van enkele dagen terug
+  en de verwachte waarden van de komende tijd.
+
+### Gewijzigd
+* Dependencies bijgewerkt
+
 ## Version 1.3.2
 2026-01-04
 
