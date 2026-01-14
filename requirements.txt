@@ -59,7 +59,7 @@ rich==14.2.0
 seaborn==0.13.2
 SecretStorage==3.5.0
 six==1.17.0
-tomlkit==0.13.3
+tomlkit==0.14.0
 trove-classifiers==2026.1.12.15
 twine==6.2.0
 types-pytz==2025.2.0.20251108
