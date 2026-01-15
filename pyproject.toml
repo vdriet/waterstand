@@ -4,9 +4,14 @@ build-backend = "hatchling.build"
 
 [project]
 name = "waterstand"
-version = "1.4.1"
+version = "1.4.2"
 authors = [
     { name = "Peter van de Riet", email = "vdriet@gmail.com" },
+]
+dependencies = [
+    "matplotlib",
+    "pandas",
+    "seaborn"
 ]
 description = "package voor ophalen waterstand"
 readme = "README.md"

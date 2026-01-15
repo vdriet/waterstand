@@ -57,6 +57,7 @@ requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==14.2.0
 seaborn==0.13.2
+types-seaborn==0.13.2.20251221
 SecretStorage==3.5.0
 six==1.17.0
 tomlkit==0.14.0
