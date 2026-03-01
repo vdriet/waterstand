@@ -30,7 +30,7 @@ class TestWaterstand(unittest.TestCase):
     """ test van de normale flow """
     mock_requestsget.return_value = create_mock_response('tests/testdata1.json')
 
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
     verwacht = {'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': 84.0, 'morgen': 89.0}
 
     self.assertEqual(response, verwacht)
@@ -40,7 +40,7 @@ class TestWaterstand(unittest.TestCase):
     """ test 2 van de normale flow """
     mock_requestsget.return_value = create_mock_response('tests/testdata2.json')
 
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
     verwacht = {'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': -999, 'morgen': 89.0}
 
     self.assertEqual(response, verwacht)
@@ -49,7 +49,7 @@ class TestWaterstand(unittest.TestCase):
   @patch('waterstand.sleep', return_value=None)
   def test_haalwaterstand_httperror(self, mock_sleep, mock_requestsget):
     """ test van een HTTP-fout bij het ophalen """
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
@@ -60,7 +60,7 @@ class TestWaterstand(unittest.TestCase):
   @patch('waterstand.sleep', return_value=None)
   def test_haalwaterstand_timeouterror(self, mock_sleep, mock_requestsget):
     """ test van een time-out bij het ophalen """
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
@@ -71,7 +71,7 @@ class TestWaterstand(unittest.TestCase):
   @patch('waterstand.sleep', return_value=None)
   def test_haalwaterstand_connectionerror(self, mock_sleep, mock_requestsget):
     """ Test van een connection error bij het ophalen """
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
@@ -82,7 +82,7 @@ class TestWaterstand(unittest.TestCase):
   @patch('waterstand.sleep', return_value=None)
   def test_haalwaterstand_timeout(self, mock_sleep, mock_requestsget):
     """ Test van een Time-out bij het ophalen """
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
@@ -93,7 +93,7 @@ class TestWaterstand(unittest.TestCase):
   @patch('waterstand.sleep', return_value=None)
   def test_haalwaterstand_requestexception(self, mock_sleep, mock_requestsget):
     """ Test van een algemene exceptie bij het ophalen """
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
 
     expected = {'resultaat': 'NOK', 'error': ANY}
     self.assertEqual(response, expected)
@@ -106,7 +106,7 @@ class TestWaterstand(unittest.TestCase):
   @patch('waterstand.sleep', return_value=None)
   def test_haalwaterstand_requestexception_eenmalig(self, mock_sleep, mock_requestsget):
     """ Test van een algemene exceptie bij het ophalen """
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
 
     expected = {'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': 84.0, 'morgen': 89.0}
     self.assertEqual(response, expected)
@@ -118,7 +118,7 @@ class TestWaterstand(unittest.TestCase):
     """ geen status 200 bij ophalen data """
     mock_requestsget.return_value = create_mock_response('tests/testdata1.json', 400)
 
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
     verwacht = {'resultaat': 'NOK', 'error': ANY}
 
     self.assertEqual(response, verwacht)
@@ -128,7 +128,7 @@ class TestWaterstand(unittest.TestCase):
     """ geen data als output """
     mock_requestsget.return_value = create_mock_response('tests/testdata3.json')
 
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
     verwacht = {'resultaat': 'NOK', 'error': ANY}
 
     self.assertEqual(response, verwacht)
@@ -138,7 +138,7 @@ class TestWaterstand(unittest.TestCase):
     """ apart datumformaat als output """
     mock_requestsget.return_value = create_mock_response('tests/testdata4.json')
 
-    response = waterstand.haalwaterstand('Katerveer', 'KATV')
+    response = waterstand.haalwaterstand('zwolle.ijssel')
     verwacht = {'resultaat': 'OK', 'tijd': '23-11 02:00', 'nu': -999, 'morgen': -999}
 
     self.assertEqual(response, verwacht)
@@ -148,7 +148,7 @@ class TestWaterstand(unittest.TestCase):
     """ test van de normale flow """
     mock_requestsget.return_value = create_mock_response('tests/testdata1.json')
 
-    response = waterstand.maakafbeelding('Lobith', 'LOBI')
+    response = waterstand.maakafbeelding('lobith')
     with open('tests/testdata1_plot.png', 'rb') as imagedata:
       verwacht = imagedata.read()
 

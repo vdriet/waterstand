@@ -47,18 +47,16 @@ def leesjson(url: str) -> dict:
           'error': 'Error: Data ophalen mislukt vanwege teveel pogingen'}
 
 
-def leeswaterstandjson(naam: str, afkorting: str) -> dict:
+def leeswaterstandjson(locatie: str) -> dict:
   """
   Lees de informatie van bepaalde locatie van de API van RWS.
-  :param naam: Naam van de locatie
+  :param locatie: Naam van de locatie
   :type naam: str
-  :param afkorting: Afkorting van de locatie
-  :type afkorting: str
   :return: JSON met de waardes van de waterstanden
   :rtype: dict
   """
-  url: str = 'https://waterinfo.rws.nl/api/chart/get' + \
-             f'?mapType=waterhoogte&locationCodes={naam}({afkorting})&values=-48,48'
+  url: str = 'https://waterinfo.rws.nl/api/chart/get?' \
+           + f'mapType=waterhoogte&locationCodes={locatie}&values=-48%2C48'
   return leesjson(url)
 
 
@@ -115,32 +113,28 @@ def bepaalstanden(waterstandjson: dict) -> dict:
     return {'resultaat': 'NOK', 'error': error}
 
 
-def haalwaterstand(naam: str, afkorting: str) -> dict:
+def haalwaterstand(locatie: str) -> dict:
   """
   Haal de waterstand van een locatie bij RWS en haal de noodzakelijke waarden daar uit.
-  :param naam: Naam van de locatie
+  :param locatie: Naam van de locatie
   :type naam: str
-  :param afkorting: Afkorting van de locatie
-  :type afkorting: str
   :return: JSON met de waardes van de waterstanden
   :rtype: dict
   """
-  contentjson: dict = leeswaterstandjson(naam, afkorting)
+  contentjson: dict = leeswaterstandjson(locatie)
   return bepaalstanden(contentjson)
 
 
-def maakafbeelding(naam: str, afkorting: str) -> bytes:
+def maakafbeelding(locatie: str) -> bytes:
   """
   Maak een afbeelding van de afgelopen dagen en verwachting van de komende tijd.
   De gegevens van de locatie bij RWS worden opgehaald en de noodzakelijke waarden worden gebruikt.
-  :param naam: Naam van de locatie
+  :param locatie: Naam van de locatie
   :type naam: str
-  :param afkorting: Afkorting van de locatie
-  :type afkorting: str
   :return: Grafiek in png-formaat
   :rtype: bytes
   """
-  rawdata = leeswaterstandjson(naam, afkorting)
+  rawdata = leeswaterstandjson(locatie)
   data = []
   for val in rawdata['series'][0]['data']:
     data.append({'type': 'Gemeten', 'datetime': val['dateTime'], 'value': val['value']})
@@ -155,7 +149,7 @@ def maakafbeelding(naam: str, afkorting: str) -> bytes:
   plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))
   plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=4))
   plt.xticks(rotation=45)
-  plt.title(f'Waterstand {naam}', fontsize=15)
+  plt.title(f'Waterstand {locatie}', fontsize=15)
   plt.xlabel('Tijd', fontsize=12)
   plt.ylabel('Hoogte', fontsize=12)
   plt.tight_layout()

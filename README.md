@@ -10,17 +10,17 @@ Installeer de package:
 Of zet waterstand in `requirements.txt` en installeer het op die manier.  
 `pip install -r requirements.txt --upgrade`
 
-Ga naar [de site van RWS](https://waterinfo.rws.nl/#/publiek/waterhoogte) en 
+Ga naar [de site van RWS](https://waterinfo.rws.nl/publiek/waterhoogte) en 
 zoek daar een locatie waarvan je hoogte wilt ophalen. Wanneer je de locatie aanklikt 
-en op meer details klikt, verschijnt in de adresbalk de naam en afkorting van deze
-locatie. Bijvoorbeeld voor Lobith staat er ...waterhoogte/Lobith%28LOBI%29/details... in
-het pad.
-Neem het voor de naam het deel tussen de `hoogte/` en `%28` en voor de afkorting het deel
-tussen `%28` en `%29`. In het voorbeeld wordt dat dus `Lobith` en `LOBI`.
+en op meer details klikt, verschijnt in de adresbalk de naam van deze locatie.
+Bijvoorbeeld voor Lobith staat er ...waterhoogte/lobith.bovenrijn.tolkamer/details...
+in het pad.
+Neem het voor de locatie het deel tussen de `waterhoogte/` en `/details`. In het
+voorbeeld wordt dat dus `lobith.bovenrijn.tolkamer`.
 Het meest eenvoudige programma wordt dan als volgt:
 ```Python
 from waterstand import *
-print(haalwaterstand('Lobith', 'LOBI'))
+print(haalwaterstand('lobith.bovenrijn.tolkamer'))
 ```
 
 Een PNG-afbeelding zoals hieronder kan gemaakt worden door een aanroep van `maakafbeelding()`

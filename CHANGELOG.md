@@ -1,3 +1,8 @@
+## Version 2.0.0
+2026-03-01
+### Hersteld
+Nieuwe URL van RWS ingebouwd, documentatie bijgewerkt
+
 ## Version 1.4.1
 2026-01-12
 
