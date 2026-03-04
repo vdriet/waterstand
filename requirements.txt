@@ -63,7 +63,7 @@ six==1.17.0
 tomlkit==0.14.0
 trove-classifiers==2026.1.14.14
 twine==6.2.0
-types-pytz==2025.2.0.20251108
+types-pytz==2026.1.1.20260304
 types-requests==2.32.4.20260107
 typing_extensions==4.15.0
 tzdata==2025.3
