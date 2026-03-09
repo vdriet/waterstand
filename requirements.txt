@@ -14,7 +14,7 @@ fonttools==4.61.1
 hatchling==1.29.0
 id==1.6.1
 idna==3.11
-ImageIO==2.37.2
+ImageIO==2.37.3
 importlib_metadata==8.7.1
 iniconfig==2.3.0
 isort==7.0.0
