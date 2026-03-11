@@ -1,3 +1,8 @@
+## Version 3.0.0
+2026-03-11
+### Verwijderd
+Maken van de afbeelding, dit gaf problemen in de projecten die gebruik maken van deze library.
+
 ## Version 2.0.0
 2026-03-01
 ### Hersteld
@@ -102,7 +107,7 @@ Datum: 2025-12-09
 * Eerste versie in productie
 
 ## Version a.b.c
-2025-xx-yy
+2026-xx-yy
 
 ### Nieuw
 ### Gewijzigd
