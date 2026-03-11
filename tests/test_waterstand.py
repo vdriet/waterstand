@@ -142,14 +142,3 @@ class TestWaterstand(unittest.TestCase):
     verwacht = {'resultaat': 'OK', 'tijd': '23-11 02:00', 'nu': -999, 'morgen': -999}
 
     self.assertEqual(response, verwacht)
-
-  @patch('requests.get')
-  def test_maakafbeelding(self, mock_requestsget):
-    """ test van de normale flow """
-    mock_requestsget.return_value = create_mock_response('tests/testdata1.json')
-
-    response = waterstand.maakafbeelding('lobith')
-    with open('tests/testdata1_plot.png', 'rb') as imagedata:
-      verwacht = imagedata.read()
-
-    self.assertEqual(response, verwacht)

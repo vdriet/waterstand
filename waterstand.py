@@ -5,11 +5,7 @@ en morgen worden er uit gehaald.
 from datetime import datetime, timedelta
 from time import sleep
 
-import matplotlib.dates as mdates
-import matplotlib.pyplot as plt
-import pandas as pd
 import requests
-import seaborn as sns
 from requests import Response
 
 
@@ -56,7 +52,7 @@ def leeswaterstandjson(locatie: str) -> dict:
   :rtype: dict
   """
   url: str = 'https://waterinfo.rws.nl/api/chart/get?' \
-           + f'mapType=waterhoogte&locationCodes={locatie}&values=-48%2C48'
+             + f'mapType=waterhoogte&locationCodes={locatie}&values=-48%2C48'
   return leesjson(url)
 
 
@@ -123,37 +119,3 @@ def haalwaterstand(locatie: str) -> dict:
   """
   contentjson: dict = leeswaterstandjson(locatie)
   return bepaalstanden(contentjson)
-
-
-def maakafbeelding(locatie: str) -> bytes:
-  """
-  Maak een afbeelding van de afgelopen dagen en verwachting van de komende tijd.
-  De gegevens van de locatie bij RWS worden opgehaald en de noodzakelijke waarden worden gebruikt.
-  :param locatie: Naam van de locatie
-  :type naam: str
-  :return: Grafiek in png-formaat
-  :rtype: bytes
-  """
-  rawdata = leeswaterstandjson(locatie)
-  data = []
-  for val in rawdata['series'][0]['data']:
-    data.append({'type': 'Gemeten', 'datetime': val['dateTime'], 'value': val['value']})
-  for val in rawdata['series'][1]['data']:
-    data.append({'type': 'Verwacht', 'datetime': val['dateTime'], 'value': val['value']})
-
-  df = pd.DataFrame(data)
-  df['datetime'] = pd.to_datetime(df['datetime'])
-  sns.set_theme(style="whitegrid")
-  plt.figure(figsize=(12, 6))
-  sns.lineplot(data=df, x='datetime', y='value', hue='type', marker='o')
-  plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))
-  plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=4))
-  plt.xticks(rotation=45)
-  plt.title(f'Waterstand {locatie}', fontsize=15)
-  plt.xlabel('Tijd', fontsize=12)
-  plt.ylabel('Hoogte', fontsize=12)
-  plt.tight_layout()
-  plt.savefig('plot.png')
-  with open('plot.png', 'rb') as pngfile:
-    img = pngfile.read()
-  return img
