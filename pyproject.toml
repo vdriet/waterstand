@@ -9,10 +9,7 @@ authors = [
     { name = "Peter van de Riet", email = "vdriet@gmail.com" },
 ]
 dependencies = [
-    "matplotlib",
-    "pandas",
-    "requests",
-    "seaborn"
+    "requests"
 ]
 description = "package voor ophalen waterstand"
 readme = "README.md"
