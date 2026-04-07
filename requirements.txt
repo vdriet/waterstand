@@ -19,7 +19,7 @@ pluggy==1.6.0
 Pygments==2.20.0
 pylint==4.0.5
 pyproject_hooks==1.2.0
-pytest==9.0.2
+pytest==9.0.3
 requests==2.33.1
 tomlkit==0.14.0
 types-requests==2.33.0.20260402
