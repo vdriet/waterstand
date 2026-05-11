@@ -24,4 +24,4 @@ requests==2.33.1
 tomlkit==0.15.0
 types-requests==2.33.0.20260508
 typing_extensions==4.15.0
-urllib3==2.6.3
+urllib3==2.7.0
