@@ -1,4 +1,4 @@
-astroid==4.0.4
+astroid==4.1.2
 build==1.5.1
 certifi==2026.7.22
 charset-normalizer==3.4.9
