@@ -6,7 +6,7 @@ coverage==7.16.0
 dill==0.4.1
 idna==3.19
 iniconfig==2.3.0
-isort==8.0.1
+isort==9.0.1
 librt==0.15.0
 mccabe==0.7.0
 mypy==2.3.1
