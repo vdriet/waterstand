@@ -7,7 +7,7 @@ dill==0.4.1
 idna==3.20
 iniconfig==2.3.0
 isort==9.0.2
-librt==0.15.0
+librt==0.16.0
 mccabe==0.7.0
 mypy==2.3.1
 mypy_extensions==1.1.0
