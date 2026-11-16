@@ -2,7 +2,7 @@ astroid==4.3.4
 build==1.6.1
 certifi==2026.10.23
 charset-normalizer==3.5.2
-coverage==7.17.0
+coverage==7.17.3
 dill==0.4.1
 idna==3.20
 iniconfig==2.3.1
